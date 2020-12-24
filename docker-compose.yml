@@ -10,7 +10,8 @@ services:
       - SERVER_PORT=3000
       - MONGO_URL=mongodb://mongo:27017
     volumes:
-      - ./:/code
+      - .:/usr/app/
+      - /usr/app/node_modules
     external_links:
       - mongo
       - redis

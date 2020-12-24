@@ -1,15 +1,15 @@
 # Setup env
-FROM node:14.12.0
-WORKDIR /code
+FROM node:14
+WORKDIR /usr/app
 
 # Install dependencies
-COPY package.json /code/package.json
-COPY package-lock.json /code/package-lock.json
+COPY package.json .
+COPY package-lock.json .
 RUN npm install
 RUN npm install -g nodemon
 
 # Move source codes
-COPY . /code
+COPY . .
 
 # Run
 EXPOSE 3000
