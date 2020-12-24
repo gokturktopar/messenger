@@ -44,7 +44,6 @@ require("@utils/database").connect();
 if (env === "dev") {
   redisUtil = require("@utils/redis");
 } else {
-  console.log('TESTTTT');
   redisUtil = require("./test/_test-redis");
 }
 
