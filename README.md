@@ -19,12 +19,9 @@ This project demonstrate restful node APIs of basic message application.
 
 3. Runs all tests
  ```sh
-docker exec -i {*$containerId} npm test
+docker exec -i {$containerId} npm test
  ```
-
-  
-  
-
+    * container id of messenger-server service
 # Project structure
 
 ```
