@@ -1,0 +1,650 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is for basic messaging app documentation.",
+    "version": "1.0.0",
+    "title": "Messager",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "gokturktopar@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "",
+  "tags": [
+    {
+      "name": "auth",
+      "description": "Operations about user auth"
+    },
+    {
+      "name": "user",
+      "description": "Operations about users"
+    },
+    {
+      "name": "user logs",
+      "description": "Operations about user logs"
+    },
+    {
+      "name": "message",
+      "description": "Operations about messages"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {
+    "x-access-token": {
+      "in": "header",
+      "name": "x-access-token",
+      "type": "apiKey"
+    }
+  },
+  "paths": {
+    "/api/auth/login": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Login",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Login Body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Login"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Logged in user",
+            "schema": {
+              "$ref": "#/definitions/LoginResult"
+            }
+          },
+          "400": {
+            "description": "Error occured"
+          }
+        }
+      }
+    },
+    "/api/auth/register": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Register user",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "New user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RegisterUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "New user",
+            "schema": {
+              "$ref": "#/definitions/RegisterUserResult"
+            }
+          },
+          "400": {
+            "description": "Error occured"
+          }
+        }
+      }
+    },
+    "/api/users": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "security": [
+          {
+            "x-access-token": []
+          }
+        ],
+        "summary": "Get All Users",
+        "operationId": "getAll",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns all runs with user info",
+            "schema": {
+              "$ref": "#/definitions/Users"
+            }
+          },
+          "400": {
+            "description": "Error occured"
+          }
+        }
+      }
+    },
+    "/api/users/block-user": {
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Block user",
+        "operationId": "blockUser",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "x-access-token": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Block User",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BlockUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succesful operation",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Not updated"
+          }
+        }
+      }
+    },
+    "/api/users/{id}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "security": [
+          {
+            "x-access-token": []
+          }
+        ],
+        "summary": "Get User",
+        "operationId": "getById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns user by id",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Error occured"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "security": [
+          {
+            "x-access-token": []
+          }
+        ],
+        "summary": "Delete User",
+        "operationId": "deleteById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Returns user by id"
+          },
+          "400": {
+            "description": "Error occured"
+          }
+        }
+      }
+    },
+    "/api/user-logs/{username}": {
+      "get": {
+        "tags": [
+          "user logs"
+        ],
+        "security": [
+          {
+            "x-access-token": []
+          }
+        ],
+        "summary": "Get user's all logs",
+        "operationId": "getAllLogs",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "username",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns all logs of user",
+            "schema": {
+              "$ref": "#/definitions/UserLogs"
+            }
+          },
+          "400": {
+            "description": "Error occured"
+          }
+        }
+      }
+    },
+    "/api/messages": {
+      "post": {
+        "tags": [
+          "message"
+        ],
+        "summary": "Post message",
+        "operationId": "createMessage",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "x-access-token": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "New message",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewMessage"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns added category",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "400": {
+            "description": "Message cant saved"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "message"
+        ],
+        "security": [
+          {
+            "x-access-token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "sender_username",
+            "in": "query",
+            "description": "",
+            "type": "string"
+          },
+          {
+            "name": "receiver_username",
+            "in": "query",
+            "description": "",
+            "type": "string"
+          }
+        ],
+        "summary": "Retrieve All Messages",
+        "operationId": "getAllMessage",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns all messages",
+            "schema": {
+              "$ref": "#/definitions/Messages"
+            }
+          },
+          "400": {
+            "description": "Error when data retrieved"
+          }
+        }
+      }
+    },
+    "/api/messages/{id}": {
+      "get": {
+        "tags": [
+          "message"
+        ],
+        "security": [
+          {
+            "x-access-token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id that needs to be retrieved",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "summary": "Retrieve message",
+        "operationId": "getMessage",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns message",
+            "schema": {
+              "$ref": "#/definitions/Message"
+            }
+          },
+          "400": {
+            "description": "Error when data retrieved"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "message"
+        ],
+        "summary": "Update message with id",
+        "operationId": "updateMessage",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "x-access-token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id that need to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated category",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns updated message",
+            "schema": {
+              "$ref": "#/definitions/Messages"
+            }
+          },
+          "400": {
+            "description": "Not updated"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "message"
+        ],
+        "summary": "Delete message with id",
+        "operationId": "deleteMessage",
+        "produces": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "x-access-token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id that needs to be deleted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Delete is succesful"
+          },
+          "404": {
+            "description": "Message not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Users": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/User"
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "blocked_users": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "RegisterUser": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "admin"
+        },
+        "password": {
+          "type": "string",
+          "example": "123456"
+        }
+      }
+    },
+    "BlockUser": {
+      "type": "object",
+      "properties": {
+        "blocked_username": {
+          "type": "string"
+        },
+        "blocker_username": {
+          "type": "string"
+        }
+      }
+    },
+    "RegisterUserResult": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        }
+      }
+    },
+    "Login": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "admin"
+        },
+        "password": {
+          "type": "string",
+          "example": "123456"
+        }
+      }
+    },
+    "LoginResult": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        },
+        "_id": {
+          "type": "string",
+          "description": "user id"
+        }
+      }
+    },
+    "Messages": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Message"
+      }
+    },
+    "Message": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "sender_username": {
+          "type": "string"
+        },
+        "receiver_username": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "NewMessage": {
+      "type": "object",
+      "properties": {
+        "sender_username": {
+          "type": "string"
+        },
+        "receiver_username": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "UserLogs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "successful_logins": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties":{
+                "date": {
+                  "type": "string",
+                  "format": "date"
+                }
+              }
+            }
+          },
+          "failed_logins": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties":{
+                "date": {
+                  "type": "string",
+                  "format": "date"
+                }
+              }
+            }
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      }
+    }
+  }
+}
