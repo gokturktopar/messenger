@@ -14,7 +14,7 @@ exports.addNewLog = async ({ username, logType, date }) => {
   try {
     //check user exist
     await userDatabaseHelper.getOne({username})
-    const query = { $push: { [logType]: { date: Date(date) } } };
+    const query = { $push: { [logType]: { date: date } } };
     const filter = { username };
     return await userLogDatabaseHelper.updateOne(filter, query);
   } catch (e) {
