@@ -1,4 +1,3 @@
-const testConsts = require("./_test.constants");
 let server = require("../app");
 const chai = require("chai");
 const chaiHttp = require("chai-http");
